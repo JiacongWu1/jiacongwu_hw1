@@ -1,0 +1,11 @@
+---
+title: "HW1_pstat131"
+author: "Jiacong Wu"
+date: "2022-09-29"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
