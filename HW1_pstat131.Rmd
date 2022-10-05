@@ -9,3 +9,112 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Question 1
+
+For supervised learning, there is a response variable, and we can know the accuracy of the model because we can get the data that how well the model fits the testing data. 
+
+However, for unsupervised learning, there is no response variable, the result would be a cluster or a pattern of the data.
+
+The difference would be the supervised model has a predictor, but the unsupervised model does not.
+
+Question 2
+
+In the context of machine learning, the regression model will have quantitative response variable, but a classification model will have qualitative (categorical) response variable.
+
+Question 3
+
+commonly used metrics for regression ML problems: price(lecture slides), blood pressure(lecture slides), salary
+
+commonly used metrics for classification ML problems: survived/died(lecture slides), spam/not spam(lecture slides), valid/invalid
+
+Question 4
+
+Descriptive models: Choose model to best visually emphasize a trend in data i.e. using a line or a scatterplot(from lecture slides)
+
+Inferential models: Aim to test theories, causal claims, stating relationship between outcomes and preditors
+(from lecture slides)
+
+Predictive models: Aim is to predict Y with minimum reducible error (from lecture slides)
+
+Question 5 
+
+Mechanistic models are parametric models. Mechanistic assume a parametric form for f, and we can add parameters to get more flexibility (from lecture slides)
+
+Empirically-driven models are non-parametric models which there is no assumption about the f, and it requires a large number of observations. (From lecture slides)
+
+Difference: mechanistic requires a parametric form for f, while empirically-driven does not
+
+Similarity: There is a f for both methods,$Y = f(X_1,...,X_p)+\varepsilon$. 
+
+In my opinion, for people don't know anything about models, the empirically-driven is easier to understand because intuitively it makes sense that when we have a large number of observations, the data will have certain pattern which is the model we want.
+
+For mechanistic, when we add more parameters, the model will have lower bias, and fitting the data better. However, we don't want there to be too many parameters, as that will overfit. In that case, the model will indeed fit the data pretty well, but it will behave too bad for new data that we need to predict.
+
+For empirically-driven, a large number of observations is needed, and the more the data, the better the model fits the data, the lower the bias. However, if there is too many observations, overfitting will occur. 
+
+Question 6 
+
+(1) Predictive, as it wants to predict the likelihood of something
+
+(2) inferential, as it wants the inference of how the data will behave if certain conditions are met
+
+
+Exercise 1
+
+```{r}
+#install.packages("ggplot2")
+#library(ggplot2)
+#library(tidyverse)
+#mpg
+```
+
+```{r}
+ggplot(mpg,aes(hwy))+geom_histogram()
+```
+
+It is more likely that the hwy mpg to be high in the center, and low for two tails. The distribution is left skewed.
+
+Exercise 2
+
+```{r}
+ggplot(mpg, aes(x = hwy,y = cty)) + geom_point()
+```
+It looks like a linear relationship between the two, this means that when a car have a high highway mpg, than it is likely to have a high city mpg.
+
+Exercise 3
+
+```{r}
+m = mpg %>% 
+  group_by(manufacturer) %>% 
+  summarise(counts = n()) %>%
+  arrange(counts) %>%
+  mutate(manufacturer = factor(manufacturer,manufacturer))%>%
+  ggplot(aes(x = counts, y = manufacturer)) + geom_bar(stat = "identity")
+m
+```
+
+From the data, I see that the Dodge produce the most cars, and Lincoln produce the least cars
+
+Exercise 4
+
+```{r}
+mpg %>%
+  mutate(cyl = factor(cyl))%>%
+  ggplot(aes(group = cyl,x = hwy)) + geom_boxplot()
+```
+
+Yes, I can see a pattern. The more cylinders a car has, the lower the highway mpg would be. 
+
+Question 5
+
+```{r}
+#install.packages("corrplot")
+#library(corrplot)
+mpg %>%
+  select_if(is.numeric) %>%
+  cor()%>%
+  corrplot(method = 'number', order = 'FPC', type = 'lower')
+```
+
+
+
